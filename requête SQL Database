@@ -1,0 +1,79 @@
+CREATE DATABASE IF NOT EXISTS customer_portal CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+USE customer_portal;
+
+CREATE TABLE `cart` (
+  `id` INT NOT NULL,
+  `customer_id` INT NOT NULL,
+  `product_id` INT NOT NULL,
+  `quantity` INT NOT NULL,
+  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `categories` (
+  `id` INT NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `customers` (
+  `id` INT NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
+  `phone` VARCHAR(50) DEFAULT NULL,
+  `company` VARCHAR(255) DEFAULT NULL,
+  `address` TEXT,
+  `city` VARCHAR(100) DEFAULT NULL,
+  `country` VARCHAR(100) DEFAULT NULL,
+  `status` VARCHAR(50) DEFAULT 'Active',
+  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `password` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `orders` (
+  `id` INT NOT NULL,
+  `customer_id` INT NOT NULL,
+  `order_date` DATE NOT NULL,
+  `total_amount` DECIMAL(10,2) NOT NULL,
+  `status` ENUM('Pending','Accepted','Rejected','Completed','Cancelled') DEFAULT 'Pending',
+  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `order_items` (
+  `id` INT NOT NULL,
+  `order_id` INT NOT NULL,
+  `product_id` INT NOT NULL,
+  `quantity` INT NOT NULL,
+  `price` DECIMAL(10,2) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `products` (
+  `id` INT NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
+  `category` VARCHAR(255) NOT NULL,
+  `price` DECIMAL(10,2) NOT NULL,
+  `stock` INT NOT NULL,
+  `colors` JSON DEFAULT NULL,
+  `sizes` JSON DEFAULT NULL,
+  `brand` VARCHAR(255) DEFAULT NULL,
+  `image_variants` JSON DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+INSERT INTO `categories` (`id`, `name`) VALUES
+(1, 'running'),
+(2, 'cycling'),
+(3, 'fitness');
+
+INSERT INTO `products` (`id`, `name`, `category`, `price`, `stock`, `colors`, `sizes`, `brand`, `image_variants`) VALUES
+(4, 'Chaussures Running Pro', 'running', 89.99, 35, '["blue", "brown", "navy", "red"]', '["39", "40", "41", "42", "43"]', 'SportTech', '{"red": "/uploads/running-shoes-red.jpeg", "blue": "/uploads/running-shoes-blue.jpeg", "navy": "/uploads/running-shoes-navy.jpeg", "brown": "/uploads/running-shoes-brown.jpeg", "default": "/uploads/running-shoes-blue.jpeg"}'),
+(5, 'Vélo Carbone X1', 'cycling', 1299.99, 12, '["black"]', '["S", "M", "L", "XL"]', 'CyclePro', '{"black": "/uploads/bicycle.jpeg", "default": "/uploads/bicycle.jpeg"}'),
+(6, 'Set Fitness Complet', 'fitness', 199.99, 23, '["black", "white"]', '["Unique"]', 'FitnessMaster', '{"black": "/uploads/fitness-set-black.jpeg", "white": "/uploads/fitness-set-white.jpeg", "default": "/uploads/fitness-set-black.jpeg"}'),
+(7, 'Tapis de Course Pro', 'fitness', 799.99, 10, '["black"]', '["Unique"]', 'FitnessMaster', '{"default": "/uploads/treadmill.jpeg"}'),
+(8, 'Short de Running', 'running', 29.99, 120, '["black", "blue", "grey"]', '["S", "M", "L", "XL"]', 'SportTech', '{"blue": "/uploads/running-shorts-blue.jpeg", "grey": "/uploads/running-shorts-grey.jpeg", "black": "/uploads/running-shorts-black.jpeg", "default": "/uploads/running-shorts-black.jpeg"}'),
+(9, 'Veste de Cyclisme', 'cycling', 99.99, 56, '["black", "grey", "navy"]', '["S", "M", "L", "XL"]', 'CyclePro', '{"grey": "/uploads/cycling-jacket-grey.jpeg", "default": "/uploads/cycling-jacket-grey.jpeg"}');
+
+

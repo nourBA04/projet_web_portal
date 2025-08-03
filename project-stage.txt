@@ -1,0 +1,13 @@
+cd /var/www/html/sportsdist/backend
+node index.js
+
+cd /var/www/html/sportsdist
+npm run dev
+
+cd /var/www/html/my-portal/backend
+node index.js
+
+cd /var/www/html/my-portal
+npm run dev
+
+phpmyadmin : root / saloua77

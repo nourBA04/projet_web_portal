@@ -1,0 +1,16 @@
+installation necessaire pour windows:
+
+Télécharge Node.js (inclut npm) depuis : https://nodejs.org
+
+cd "path to folder\sportsdist"
+npm install
+
+cd "path to folder\sportsdist\backend"
+npm install
+npm install --save-dev nodemon
+npx nodemon index.js
+
+cd "path to folder\my-portal"
+npm install
+
+
